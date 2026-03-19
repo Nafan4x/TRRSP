@@ -1,8 +1,0 @@
-Package: matrix
-Version: 1.0
-Section: utils
-Priority: optional
-Architecture: amd64
-Depends: golang-go, make
-Maintainer: nafan4x
-Description: Matrix diagonal minimum processor.
