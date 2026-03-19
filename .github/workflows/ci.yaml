@@ -2,9 +2,9 @@ name: CI-Pipeline
 
 on:
   push:
-    branches: main
+    branches: [ main, master ]
   pull_request:
-    branches: main
+    branches: [ main, master ]
 
 jobs:
   Build:
@@ -70,32 +70,32 @@ jobs:
   Package:
     needs: Test
     runs-on: ubuntu-latest
-
+  
     steps:
       - uses: actions/checkout@v4
-
+  
       - uses: actions/download-artifact@v4
         with:
           name: matrix-artifact
           path: ./usr/local/bin
-
+  
       - name: Build deb-package
         run: |
-          # Создаем структуру deb пакета если её нет
+
+          ls -la usr/local/bin/
+          
+
           mkdir -p DEBIAN
           
-          # Проверяем что control файл существует
-          if [ ! -f DEBIAN/control ]; then
-            echo "Error: DEBIAN/control not found!"
-            exit 1
-          fi
-          
-          # Собираем пакет
-          dpkg-deb --build . matrix.deb
 
-      - name: Upload deb package
+          dpkg-deb --build . matrix.deb
+  
+      - name: Upload deb
         uses: actions/upload-artifact@v4
         with:
           name: deb-package
           path: "matrix.deb"
           retention-days: 1
+
+
+          
